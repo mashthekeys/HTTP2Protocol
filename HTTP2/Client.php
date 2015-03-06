@@ -388,7 +388,7 @@ class Client
             tracer::debug("decoded frame at $offset, length $len\n");
             $offset += $len;
         }
-        if ($offset) perl_substr4($this->input, 0, $offset, '');
+        if ($offset) PerlCompat::substr4($this->input, 0, $offset, '');
     }
 
 }

@@ -46,7 +46,7 @@ class Upgrade
             'Connection: Upgrade, HTTP2-Settings',
             'Upgrade: ' . HTTP2::ident_plain(),
             'HTTP2-Settings: '
-            . encode_base64url($con->frame_encode(Constants::SETTINGS, 0, 0, [])),
+            . PerlCompat::encode_base64url($con->frame_encode(Constants::SETTINGS, 0, 0, [])),
             '', ''
         ]);
     }
@@ -104,7 +104,7 @@ class Upgrade
             ) {
                 $success |= 0b010;
             } elseif ($header == "http2-settings"
-                && null != $con->frame_decode(decode_base64url($value), 0)
+                && null != $con->frame_decode(PerlCompat::decode_base64url($value), 0)
             ) {
                 $success |= 0b100;
             } else {

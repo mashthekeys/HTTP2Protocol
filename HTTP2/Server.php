@@ -405,7 +405,7 @@ Feed decoder with chunks of client's request
             if (!isset($len)) $con->shutdown(1);
             if (!$len) return;
 
-            perl_substr4( $this->input, $offset, $len, '');
+            PerlCompat::substr4( $this->input, $offset, $len, '');
 
             $con->enqueue(
                 $con->upgrade_response(),
@@ -441,7 +441,7 @@ Feed decoder with chunks of client's request
             tracer::debug("decoded frame at $offset, length $len\n");
             $offset += $len;
         }
-        if ($offset) perl_substr4( $this->input, 0, $offset, '');
+        if ($offset) PerlCompat::substr4( $this->input, 0, $offset, '');
     }
 
 }

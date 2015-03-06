@@ -321,7 +321,7 @@ extends Stream//, Frame, Upgrade
 
         $this->enqueue(
             $this->frame_encode(Constants::HEADERS, $flags, $stream_id,
-                ['hblock' => perl_substr4($header_block, 0, $max_size, '')]
+                ['hblock' => PerlCompat::substr4($header_block, 0, $max_size, '')]
             )
         );
 
@@ -329,7 +329,7 @@ extends Stream//, Frame, Upgrade
             $flags = strlen($header_block) <= $max_size ? 0 : Constants::END_HEADERS;
             $this->enqueue(
                 $this->frame_encode(Constants::CONTINUATION, $flags,
-                    $stream_id, perl_substr4($header_block, 0, $max_size, '')
+                    $stream_id, PerlCompat::substr4($header_block, 0, $max_size, '')
                 )
             );
         }
@@ -344,7 +344,7 @@ extends Stream//, Frame, Upgrade
 
         $this->enqueue(
             $this->frame_encode(Constants::PUSH_PROMISE, $flags, $stream_id,
-                [$promised_id, perl_substr4($header_block, 0, $max_size - 4, '')]
+                [$promised_id, PerlCompat::substr4($header_block, 0, $max_size - 4, '')]
             )
         );
 
@@ -352,7 +352,7 @@ extends Stream//, Frame, Upgrade
             $flags = strlen($header_block) <= $max_size ? 0 : Constants::END_HEADERS;
             $this->enqueue(
                 $this->frame_encode(Constants::CONTINUATION, $flags,
-                    $stream_id, perl_substr4($header_block, 0, $max_size, '')
+                    $stream_id, PerlCompat::substr4($header_block, 0, $max_size, '')
                 )
             );
         }
@@ -382,7 +382,7 @@ extends Stream//, Frame, Upgrade
 
             $this->enqueue(
                 $this->frame_encode(Constants::DATA, $flags,
-                    $stream_id, perl_substr4($data, 0, $size, '')
+                    $stream_id, PerlCompat::substr4($data, 0, $size, '')
                 )
             );
             if ($flags & Constants::END_STREAM) break;
